@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primary 3 Science Quiz – Singapore Happy Quiz</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: #fff8e7;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #ff6f61;
+    font-size: 2em;
+  }
+  .question {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 2px solid #ffcc80;
+    border-radius: 15px;
+    background: #fff3e0;
+  }
+  .question h3 {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+  }
+  .options button {
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    border: 2px solid #90caf9;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 1em;
+    font-family: inherit; /* Inherit font from body */
+  }
+  .options button:hover { background: #e3f2fd; }
+  .options button.correct { background: #c8e6c9 !important; border-color: #66bb6a; }
+  .options button.wrong { background: #ffcdd2 !important; border-color: #ef5350; }
+  #progress-container { background: #f0f0f0; border-radius: 10px; overflow: hidden; height: 20px; margin: 20px 0; }
+  #progress-bar { background: #81c784; height: 100%; width: 0; transition: width 0.3s; }
+  #timer { font-size: 1.3em; color: #ff7043; text-align: center; margin: 10px 0; }
+  #history { margin-top: 20px; padding: 10px; background: #f1f8e9; border-radius: 12px; }
+  #history h3 { margin-top: 0; }
+  .hidden { display: none; }
+  
+  /* --- New styles for improved layout --- */
+  .settings-form .form-control {
+    margin-bottom: 15px;
+  }
+  .settings-form fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+  .settings-form legend {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .settings-form label {
+    margin-right: 15px;
+    display: inline-block; /* Better alignment for checkboxes */
+    margin-bottom: 5px;
+  }
+  #startBtn {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🎉 Singapore Happy Quiz 🎉</h1>
+
+  <div class="settings-form">
+    <div class="form-control">
+      <label>Number of Questions: <input type="number" id="numQuestions" value="5" min="1" max="50"></label>
+    </div>
+    <div class="form-control">
+      <label>Time Limit (minutes): <input type="number" id="timeLimit" value="5" min="1"></label>
+    </div>
+    <div class="form-control">
+      <label><input type="checkbox" id="autoSubmit"> Auto-submit when finished</label>
+    </div>
+    
+    <fieldset class="form-control">
+      <legend>Select Topics:</legend>
+      <label><input type="checkbox" class="topic" value="Living & Non-Living Things" checked> Living & Non-Living Things</label>
+      <label><input type="checkbox" class="topic" value="Materials & States of Matter" checked> Materials & States of Matter</label>
+      <label><input type="checkbox" class="topic" value="Life Cycles" checked> Life Cycles</label>
+      <label><input type="checkbox" class="topic" value="Energy, Light & Heat" checked> Energy, Light & Heat</label>
+      <label><input type="checkbox" class="topic" value="Water & Weather" checked> Water & Weather</label>
+      <label><input type="checkbox" class="topic" value="Plants" checked> Plants</label>
+      <label><input type="checkbox" class="topic" value="Animals & Habitats" checked> Animals & Habitats</label>
+      <label><input type="checkbox" class="topic" value="Forces & Simple Machines" checked> Forces & Simple Machines</label>
+    </fieldset>
+
+    <div class="form-control">
+      <button id="startBtn">🚀 Start Quiz</button>
+    </div>
+  </div>
+
+  <div id="timer"></div>
+  <div id="progress-container"><div id="progress-bar"></div></div>
+  <div id="quiz"></div>
+  <button id="submitBtn" class="hidden">✅ Submit Quiz</button>
+  <div id="result"></div>
+
+  <div id="history">
+    <h3>📜 Quiz History</h3>
+    <ul id="historyList"></ul>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+const questions = {
+  "Living & Non-Living Things": [
+    { q: "Which of these is a living thing?", options: ["Rock", "Fish", "Table", "Spoon"], answer: "Fish" },
+    { q: "Which of these needs air, food, and water to survive?", options: ["Tree", "Toy", "Car", "Cup"], answer: "Tree" },
+    { q: "Which of these grows over time?", options: ["Cat", "Chair", "Pen", "Stone"], answer: "Cat" },
+    { q: "Which of these can reproduce?", options: ["Dog", "Book", "Cup", "Shoe"], answer: "Dog" },
+    { q: "Which characteristic shows something is living?", options: ["It moves on its own", "It can be painted", "It can be broken", "It has a shape"], answer: "It moves on its own" },
+    { q: "Which of these is NOT a living thing?", options: ["Bacteria", "Flower", "Rock", "Frog"], answer: "Rock" },
+    { q: "A seed grows into a plant. Which process shows it is living?", options: ["Growth", "Melting", "Freezing", "Evaporation"], answer: "Growth" },
+    { q: "Which is a living thing that breathes?", options: ["Mushroom", "Car", "Book", "Stone"], answer: "Mushroom" }
+  ],
+  "Materials & States of Matter": [
+    { q: "Water can exist in which of these forms?", options: ["Solid, Liquid, Gas", "Solid only", "Gas only", "Liquid only"], answer: "Solid, Liquid, Gas" },
+    { q: "Which material is transparent?", options: ["Wood", "Glass", "Metal", "Paper"], answer: "Glass" },
+    { q: "Which material is a good conductor of electricity?", options: ["Copper", "Plastic", "Rubber", "Wood"], answer: "Copper" },
+    { q: "Which of these melts when heated?", options: ["Ice", "Stone", "Wood", "Brick"], answer: "Ice" },
+    { q: "Which material changes shape easily when force is applied?", options: ["Plasticine", "Glass", "Metal", "Stone"], answer: "Plasticine" },
+    { q: "Ice becomes water at 0°C. Which process is this?", options: ["Melting", "Freezing", "Condensation", "Evaporation"], answer: "Melting" },
+    { q: "Which material is magnetic?", options: ["Iron", "Copper", "Plastic", "Wood"], answer: "Iron" },
+    { q: "Which of these is a property of all liquids?", options: ["Take the shape of the container", "Keep their shape", "Cannot flow", "Are hard"], answer: "Take the shape of the container" }
+  ],
+  "Life Cycles": [
+    { q: "What is the first stage of a butterfly’s life cycle?", options: ["Egg", "Caterpillar", "Pupa", "Adult"], answer: "Egg" },
+    { q: "A young frog is called a?", options: ["Pupa", "Tadpole", "Larva", "Chick"], answer: "Tadpole" },
+    { q: "Which stage comes after larva in a butterfly?", options: ["Pupa", "Egg", "Adult", "Caterpillar"], answer: "Pupa" },
+    { q: "Seeds grow into plants under which conditions?", options: ["Soil, Water, Sunlight", "Only Soil", "Only Water", "Only Sunlight"], answer: "Soil, Water, Sunlight" },
+    { q: "Which sequence is correct for a frog's life cycle?", options: ["Egg → Tadpole → Froglet → Adult", "Adult → Egg → Tadpole → Froglet", "Tadpole → Egg → Froglet → Adult", "Egg → Adult → Tadpole → Froglet"], answer: "Egg → Tadpole → Froglet → Adult" },
+    { q: "A seed needs water, warmth, and air to grow. Which is the process called?", options: ["Germination", "Photosynthesis", "Pollination", "Evaporation"], answer: "Germination" },
+    { q: "Which animal undergoes complete metamorphosis?", options: ["Butterfly", "Frog", "Snake", "Dog"], answer: "Butterfly" },
+    { q: "Which part of the plant becomes the fruit after fertilization?", options: ["Ovary", "Leaf", "Stem", "Root"], answer: "Ovary" }
+  ],
+  "Energy, Light & Heat": [
+    { q: "The Sun is a source of?", options: ["Light and Heat", "Water", "Food", "Wind"], answer: "Light and Heat" },
+    { q: "Which surface reflects light the best?", options: ["Mirror", "Paper", "Cloth", "Wood"], answer: "Mirror" },
+    { q: "Which of these produces heat?", options: ["Candle", "Ice", "Water", "Stone"], answer: "Candle" },
+    { q: "Shadows are formed when?", options: ["An object blocks light", "It rains", "Wind blows", "Plants grow"], answer: "An object blocks light" },
+    { q: "Which of these materials blocks light completely?", options: ["Cardboard", "Glass", "Plastic wrap", "Water"], answer: "Cardboard" },
+    { q: "Why does metal feel colder than wood at room temperature?", options: ["Metal conducts heat faster", "Wood has color", "Metal is heavier", "Wood is lighter"], answer: "Metal conducts heat faster" },
+    { q: "Which energy change happens when we boil water?", options: ["Heat → Kinetic Energy", "Light → Heat", "Chemical → Light", "Sound → Heat"], answer: "Heat → Kinetic Energy" },
+    { q: "Shadows become shorter when the Sun is?", options: ["High in the sky", "Setting", "Rising", "Hidden by clouds"], answer: "High in the sky" }
+  ],
+  "Water & Weather": [
+    { q: "Water changes into water vapour during?", options: ["Melting", "Freezing", "Evaporation", "Condensation"], answer: "Evaporation" },
+    { q: "Rain comes from?", options: ["Clouds", "Rivers", "Sea", "Plants"], answer: "Clouds" },
+    { q: "Which instrument measures rainfall?", options: ["Rain gauge", "Thermometer", "Barometer", "Anemometer"], answer: "Rain gauge" },
+    { q: "Snow is water in which form?", options: ["Solid", "Liquid", "Gas", "Plasma"], answer: "Solid" },
+    { q: "When water vapour cools, it forms?", options: ["Condensation", "Evaporation", "Melting", "Freezing"], answer: "Condensation" },
+    { q: "Which process makes clouds?", options: ["Evaporation + Condensation", "Melting + Freezing", "Photosynthesis", "Pollination"], answer: "Evaporation + Condensation" },
+    { q: "Which weather instrument measures air pressure?", options: ["Barometer", "Rain gauge", "Thermometer", "Anemometer"], answer: "Barometer" },
+    { q: "Which process causes water to seep into the soil?", options: ["Infiltration", "Condensation", "Evaporation", "Precipitation"], answer: "Infiltration" }
+  ],
+  "Plants": [
+    { q: "Which part of the plant makes food?", options: ["Leaf", "Root", "Stem", "Flower"], answer: "Leaf" },
+    { q: "Which part of the plant takes in water?", options: ["Root", "Stem", "Leaf", "Flower"], answer: "Root" },
+    { q: "Which part attracts insects for pollination?", options: ["Flower", "Leaf", "Root", "Stem"], answer: "Flower" },
+    { q: "Plants store food in which part?", options: ["Root", "Leaf", "Stem", "Flower"], answer: "Root" },
+    { q: "Which process do plants use to make food?", options: ["Photosynthesis", "Evaporation", "Condensation", "Respiration"], answer: "Photosynthesis" },
+    { q: "Which part supports the plant and carries water to leaves?", options: ["Stem", "Root", "Leaf", "Flower"], answer: "Stem" },
+    { q: "Which plant part becomes a seed?", options: ["Ovary", "Leaf", "Stem", "Root"], answer: "Ovary" },
+    { q: "Which adaptation helps plants survive in dry areas?", options: ["Thick leaves", "Thin leaves", "Bright flowers", "Shallow roots"], answer: "Thick leaves" }
+  ],
+  "Animals & Habitats": [
+    { q: "Which animal lives both on land and in water?", options: ["Frog", "Dog", "Bird", "Cat"], answer: "Frog" },
+    { q: "Which animal lays eggs?", options: ["Cat", "Dog", "Hen", "Cow"], answer: "Hen" },
+    { q: "Which animal builds a web?", options: ["Spider", "Ant", "Worm", "Butterfly"], answer: "Spider" },
+    { q: "Which animal lives in a hive?", options: ["Bee", "Cat", "Fish", "Dog"], answer: "Bee" },
+    { q: "Which habitat does a camel live in?", options: ["Desert", "Forest", "Ocean", "Arctic"], answer: "Desert" },
+    { q: "Which animal is nocturnal?", options: ["Owl", "Butterfly", "Dog", "Hen"], answer: "Owl" },
+    { q: "Which animals get oxygen from water?", options: ["Fish", "Dog", "Cat", "Hen"], answer: "Fish" },
+    { q: "Which adaptation helps birds fly?", options: ["Hollow bones", "Sharp teeth", "Strong legs", "Long tail"], answer: "Hollow bones" }
+  ],
+  "Forces & Simple Machines": [
+    { q: "Which force pulls objects to the ground?", options: ["Gravity", "Push", "Friction", "Magnetism"], answer: "Gravity" },
+    { q: "A seesaw is an example of?", options: ["Lever", "Pulley", "Wheel", "Spring"], answer: "Lever" },
+    { q: "Friction does what to moving objects?", options: ["Slows them down", "Speeds them up", "Makes them float", "Changes color"], answer: "Slows them down" },
+    { q: "Magnets attract which material?", options: ["Iron", "Plastic", "Glass", "Wood"], answer: "Iron" },
+    { q: "Which simple machine helps lift heavy objects easily?", options: ["Lever", "Pulley", "Wheel", "Ramp"], answer: "Pulley" },
+    { q: "Which force opposes motion between surfaces?", options: ["Friction", "Gravity", "Magnetism", "Electricity"], answer: "Friction" },
+    { q: "Which type of lever is a seesaw?", options: ["First-class", "Second-class", "Third-class", "Pulley"], answer: "First-class" },
+    { q: "Which magnet will repel another magnet?", options: ["Like poles", "Opposite poles", "North pole to South pole", "No poles"], answer: "Like poles" }
+  ]
+};
+
+
+let currentQuiz = [];
+let answers = {};
+let timerInterval;
+let timeLeft;
+
+/**
+ * Shuffles an array in place using the Fisher-Yates algorithm for an unbiased result.
+ * @param {Array} arr The array to shuffle.
+ * @returns {Array} The shuffled array.
+ */
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]]; // Swap elements
+  }
+  return arr;
+}
+
+function startQuiz() {
+  const numQ = parseInt($('#numQuestions').value);
+  const limit = parseInt($('#timeLimit').value) * 60;
+  const selectedTopics = [...$$('.topic:checked')].map(c => c.value);
+
+  let pool = [];
+  selectedTopics.forEach(topic => {
+    if (questions[topic]) pool = pool.concat(questions[topic]);
+  });
+
+  if (pool.length === 0) { alert("Please select at least one topic."); return; }
+  if (pool.length < numQ) { alert(`Not enough questions for the selected topics! Please select more topics or fewer questions. Available: ${pool.length}`); return; }
+
+
+  currentQuiz = shuffle(pool).slice(0, numQ);
+  answers = {};
+  $('#quiz').innerHTML = '';
+  $('#result').innerHTML = '';
+  $('#submitBtn').classList.remove('hidden');
+  $('.settings-form').classList.add('hidden'); // Hide settings after start
+
+  currentQuiz.forEach((q,i) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question';
+    qDiv.innerHTML = `<h3>Q${i+1}. ${q.q}</h3>`;
+    const optsDiv = document.createElement('div'); optsDiv.className = 'options';
+    shuffle(q.options).forEach(opt => {
+      const btn = document.createElement('button'); btn.textContent = opt;
+      btn.onclick = () => {
+        // Prevent changing answer after selection
+        if (answers[i] !== undefined) return; 
+        
+        answers[i] = opt;
+        
+        // Mark all buttons in this question to show the correct answer
+        optsDiv.querySelectorAll('button').forEach(b => {
+          if (b.textContent === q.answer) {
+            b.classList.add('correct');
+          } else if (b.textContent === opt) {
+            b.classList.add('wrong');
+          }
+        });
+        
+        updateProgress();
+        if($('#autoSubmit').checked && Object.keys(answers).length === currentQuiz.length) {
+            setTimeout(submitQuiz, 500); // Short delay to show final result
+        };
+      };
+      optsDiv.appendChild(btn);
+    });
+    qDiv.appendChild(optsDiv);
+    $('#quiz').appendChild(qDiv);
+  });
+
+  timeLeft = limit;
+  clearInterval(timerInterval);
+  if (limit > 0){
+    $('#timer').textContent = formatTime(timeLeft);
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      $('#timer').textContent = formatTime(Math.max(0,timeLeft));
+      if(timeLeft <= 0){ clearInterval(timerInterval); submitQuiz(); }
+    }, 1000);
+  }
+  updateProgress();
+}
+
+function updateProgress() {
+  const percent = (Object.keys(answers).length / currentQuiz.length) * 100;
+  $('#progress-bar').style.width = percent + '%';
+}
+
+function formatTime(sec) {
+  const m = Math.floor(sec/60);
+  const s = sec % 60;
+  return `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+function submitQuiz() {
+  clearInterval(timerInterval);
+  $('#submitBtn').classList.add('hidden');
+  
+  let score = 0;
+  currentQuiz.forEach((q,i)=>{ if(answers[i]===q.answer) score++; });
+  const percent = Math.round((score/currentQuiz.length)*100);
+  $('#result').innerHTML = `<h2>🎯 You got ${score} / ${currentQuiz.length} (${percent}%)</h2><button onclick="location.reload()">Play Again</button>`;
+
+  // --- BUG FIX APPLIED ---
+  const history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+  history.unshift({date: new Date().toLocaleString(), score, total: currentQuiz.length});
+  if(history.length > 10) history.pop(); // Keep history to 10 items
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+  loadHistory();
+}
+
+function loadHistory() {
+  // --- BUG FIX APPLIED ---
+  const history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+  $('#historyList').innerHTML = history.map(h=>`<li>${h.date}: <strong>${h.score}/${h.total}</strong></li>`).join('');
+}
+
+$('#startBtn').onclick = startQuiz;
+$('#submitBtn').onclick = submitQuiz;
+
+// Initial load of history when the page opens
+loadHistory();
+</script>
+</body>
+</html>
