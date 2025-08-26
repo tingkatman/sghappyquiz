@@ -156,7 +156,6 @@
 <p class="p1"><span class="s1">const $ = s =&gt; document.querySelector(s);</span></p>
 <p class="p1"><span class="s1">const $$ = s =&gt; document.querySelectorAll(s);</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">// --- UPDATED: All questions now have an 'explanation' field ---</span></p>
 <p class="p1"><span class="s1">const questions = {</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Living &amp; Non-Living Things": [</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which of these is a living thing?", options: ["Rock", "Fish", "Table", "Spoon"], answer: "Fish", explanation: "Living things can grow, move, reproduce, and need food and water. A fish does all of these, while rocks, tables, and spoons do not." },</span></p>
@@ -244,12 +243,10 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const btn = document.createElement('button');</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>btn.textContent = opt;</span></p>
 <p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>// --- UPDATED: On-click logic just selects the answer ---</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>btn.onclick = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>// Remove 'selected' from sibling buttons and apply to the clicked one</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>optsDiv.querySelectorAll('button').forEach(b =&gt; b.classList.remove('selected'));</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>btn.classList.add('selected');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>answers[i] = opt; // Store the selected answer</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>answers[i] = opt;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>updateProgress();</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>};</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>optsDiv.appendChild(btn);</span></p>
@@ -264,7 +261,6 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#progress-bar').style.width = percent + '%';</span></p>
 <p class="p1"><span class="s1">}</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">// --- UPDATED: This function now handles all grading and feedback ---</span></p>
 <p class="p1"><span class="s1">function submitQuiz() {</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let score = 0;</span></p>
 <p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span></p>
@@ -274,12 +270,10 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const userAnswer = answers[i];</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const correctAnswer = q.answer;</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// Grade the question</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (userAnswer === correctAnswer) {</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>score++;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// Apply visual feedback</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>optionsButtons.forEach(button =&gt; {</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const buttonText = button.textContent;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (buttonText === correctAnswer) {</span></p>
@@ -289,10 +283,9 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (buttonText === userAnswer &amp;&amp; userAnswer !== correctAnswer) {</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>button.classList.add('wrong');</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>button.disabled = true; // Disable all buttons for this question</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>button.disabled = true;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>// Add explanation if the answer was wrong and an explanation exists</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (userAnswer !== correctAnswer &amp;&amp; q.explanation) {</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const explanationDiv = document.createElement('div');</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explanationDiv.className = 'explanation';</span></p>
@@ -301,7 +294,6 @@
 <p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
 <p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>// Hide the submit button and show the final score</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#submitBtn').classList.add('hidden');</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const percent = (currentQuiz.length &gt; 0) ? Math.round((score / currentQuiz.length) * 100) : 0;</span></p>
 <p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#result').innerHTML = `&lt;h2&gt;🎯 You got ${score} / ${currentQuiz.length} (${percent}%)&lt;/h2&gt;&lt;button onclick="location.reload()"&gt;Play Again&lt;/button&gt;`;</span></p>
