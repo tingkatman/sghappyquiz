@@ -20,6 +20,15 @@
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
+  
+  /* --- Style for new header image --- */
+  #header-logo {
+    display: block;
+    margin: 10px auto 20px; /* Centers the image and adds space below */
+    max-width: 200px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+  }
+
   h1 {
     text-align: center;
     color: #ff6f61;
@@ -53,9 +62,8 @@
   .options button:hover:not(:disabled) { background: #e3f2fd; }
   .options button:disabled { cursor: default; }
 
-  /* --- New and Modified Styles --- */
   .options button.selected {
-    border-color: #1e88e5; /* A strong blue to indicate selection */
+    border-color: #1e88e5;
     background: #bbdefb;
   }
   .options button.correct {
@@ -73,7 +81,6 @@
     border-radius: 8px;
     border: 1px solid #fdd835;
   }
-  /* --- End New Styles --- */
 
   #progress-container { background: #f0f0f0; border-radius: 10px; overflow: hidden; height: 20px; margin: 20px 0; }
   #progress-bar { background: #81c784; height: 100%; width: 0; transition: width 0.3s; }
@@ -99,6 +106,10 @@
 </head>
 <body>
 <div class="container">
+
+  <!-- New image added here -->
+  <img id="header-logo" src="your_image_name.png" alt="Singapore Happy Quiz Logo">
+
   <h1>🎉 Singapore Happy Quiz 🎉</h1>
 
   <div class="settings-form">
@@ -283,7 +294,6 @@ function submitQuiz() {
   const percent = (currentQuiz.length > 0) ? Math.round((score / currentQuiz.length) * 100) : 0;
   $('#result').innerHTML = `<h2>🎯 You got ${score} / ${currentQuiz.length} (${percent}%)</h2><button onclick="location.reload()">Play Again</button>`;
 
-  // Update and save history
   const history = JSON.parse(localStorage.getItem('quizHistory')) || [];
   history.unshift({ date: new Date().toLocaleString(), score, total: currentQuiz.length });
   if (history.length > 10) history.pop();
@@ -296,7 +306,6 @@ function loadHistory() {
   $('#historyList').innerHTML = history.map(h => `<li>${h.date}: <strong>${h.score}/${h.total}</strong></li>`).join('');
 }
 
-// --- Event Listeners ---
 $('#startBtn').onclick = startQuiz;
 $('#submitBtn').onclick = submitQuiz;
 loadHistory();
