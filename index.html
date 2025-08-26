@@ -1,323 +1,306 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.5">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primary 3 Science Quiz – Singapore Happy Quiz</title>
+<style>
+  body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: #fff8e7;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+  }
+  .container {
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  h1 {
+    text-align: center;
+    color: #ff6f61;
+    font-size: 2em;
+  }
+  .question {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 2px solid #ffcc80;
+    border-radius: 15px;
+    background: #fff3e0;
+  }
+  .question h3 {
+    margin: 0 0 10px;
+    font-size: 1.2em;
+  }
+  .options button {
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    border: 2px solid #90caf9;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    font-size: 1em;
+    font-family: inherit;
+  }
+  .options button:hover:not(:disabled) { background: #e3f2fd; }
+  .options button:disabled { cursor: default; }
+
+  /* --- New and Modified Styles --- */
+  .options button.selected {
+    border-color: #1e88e5; /* A strong blue to indicate selection */
+    background: #bbdefb;
+  }
+  .options button.correct {
+    background: #c8e6c9 !important;
+    border-color: #66bb6a !important;
+  }
+  .options button.wrong {
+    background: #ffcdd2 !important;
+    border-color: #ef5350 !important;
+  }
+  .explanation {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff9c4;
+    border-radius: 8px;
+    border: 1px solid #fdd835;
+  }
+  /* --- End New Styles --- */
+
+  #progress-container { background: #f0f0f0; border-radius: 10px; overflow: hidden; height: 20px; margin: 20px 0; }
+  #progress-bar { background: #81c784; height: 100%; width: 0; transition: width 0.3s; }
+  #history { margin-top: 20px; padding: 10px; background: #f1f8e9; border-radius: 12px; }
+  #history h3 { margin-top: 0; }
+  .hidden { display: none; }
+  
+  .settings-form .form-control { margin-bottom: 15px; }
+  .settings-form fieldset { border: none; padding: 0; margin: 0; }
+  .settings-form legend { font-weight: bold; margin-bottom: 10px; }
+  .settings-form label { margin-right: 15px; display: inline-block; margin-bottom: 5px; }
+  #startBtn, #result button, #submitBtn {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 12px;
+    border: none;
+    background: #ff6f61;
+    color: white;
+  }
+  #result button { margin-top: 20px; }
+</style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;title&gt;Primary 3 Science Quiz – Singapore Happy Quiz&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1">&lt;style&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>body {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-family: 'Comic Sans MS', cursive, sans-serif;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #fff8e7;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin: 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: #333;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.container {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>max-width: 900px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin: auto;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #fff;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>box-shadow: 0 4px 10px rgba(0,0,0,0.1);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>h1 {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>text-align: center;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: #ff6f61;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 2em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.question {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin-bottom: 15px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 15px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: 2px solid #ffcc80;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 15px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #fff3e0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.question h3 {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin: 0 0 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 1.2em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.options button {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>display: block;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin: 5px 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>width: 100%;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>text-align: left;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #fff;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: 2px solid #90caf9;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 12px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>cursor: pointer;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>transition: background 0.2s, border-color 0.2s;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 1em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-family: inherit;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.options button:hover:not(:disabled) { background: #e3f2fd; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.options button:disabled { cursor: default; }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>/* --- New and Modified Styles --- */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.options button.selected {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-color: #1e88e5; /* A strong blue to indicate selection */</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #bbdefb;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.options button.correct {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #c8e6c9 !important;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-color: #66bb6a !important;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.options button.wrong {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #ffcdd2 !important;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-color: #ef5350 !important;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.explanation {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>margin-top: 15px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 10px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background-color: #fff9c4;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 8px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: 1px solid #fdd835;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>/* --- End New Styles --- */</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#progress-container { background: #f0f0f0; border-radius: 10px; overflow: hidden; height: 20px; margin: 20px 0; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#progress-bar { background: #81c784; height: 100%; width: 0; transition: width 0.3s; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#history { margin-top: 20px; padding: 10px; background: #f1f8e9; border-radius: 12px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#history h3 { margin-top: 0; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.hidden { display: none; }</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.settings-form .form-control { margin-bottom: 15px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.settings-form fieldset { border: none; padding: 0; margin: 0; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.settings-form legend { font-weight: bold; margin-bottom: 10px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>.settings-form label { margin-right: 15px; display: inline-block; margin-bottom: 5px; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#startBtn, #result button, #submitBtn {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>font-size: 1.2em;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>padding: 10px 20px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>cursor: pointer;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border-radius: 12px;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>border: none;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>background: #ff6f61;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>color: white;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>#result button { margin-top: 20px; }</span></p>
-<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;div class="container"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;h1&gt;🎉 Singapore Happy Quiz 🎉&lt;/h1&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div class="settings-form"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;Number of Questions: &lt;input type="number" id="numQuestions" value="5" min="1" max="50"&gt;&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" id="autoSubmit" disabled&gt; Auto-submit when finished&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;fieldset class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;legend&gt;Select Topics:&lt;/legend&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Living &amp; Non-Living Things" checked&gt; Living &amp; Non-Living Things&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Materials &amp; States of Matter" checked&gt; Materials &amp; States of Matter&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Life Cycles" checked&gt; Life Cycles&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Energy, Light &amp; Heat" checked&gt; Energy, Light &amp; Heat&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Water &amp; Weather" checked&gt; Water &amp; Weather&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Plants" checked&gt; Plants&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Animals &amp; Habitats" checked&gt; Animals &amp; Habitats&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;label&gt;&lt;input type="checkbox" class="topic" value="Forces &amp; Simple Machines" checked&gt; Forces &amp; Simple Machines&lt;/label&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/fieldset&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div class="form-control"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>&lt;button id="startBtn"&gt;🚀 Start Quiz&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="progress-container" class="hidden"&gt;&lt;div id="progress-bar"&gt;&lt;/div&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="quiz"&gt;&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;button id="submitBtn" class="hidden"&gt;✅ Submit Quiz&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="result"&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;div id="history"&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h3&gt;📜 Quiz History&lt;/h3&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;ul id="historyList"&gt;&lt;/ul&gt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;script&gt;</span></p>
-<p class="p1"><span class="s1">const $ = s =&gt; document.querySelector(s);</span></p>
-<p class="p1"><span class="s1">const $$ = s =&gt; document.querySelectorAll(s);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">const questions = {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Living &amp; Non-Living Things": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which of these is a living thing?", options: ["Rock", "Fish", "Table", "Spoon"], answer: "Fish", explanation: "Living things can grow, move, reproduce, and need food and water. A fish does all of these, while rocks, tables, and spoons do not." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which of these needs air, food, and water to survive?", options: ["Tree", "Toy", "Car", "Cup"], answer: "Tree", explanation: "A tree is a living plant that needs air (carbon dioxide), water, and nutrients (food) from the soil to survive and grow." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which of these grows over time?", options: ["Cat", "Chair", "Pen", "Stone"], answer: "Cat", explanation: "Growth is a key characteristic of living things. A cat is a living animal that grows from a kitten to an adult." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which of these can reproduce?", options: ["Dog", "Book", "Cup", "Shoe"], answer: "Dog", explanation: "Reproduction (making more of its own kind) is something only living things can do. A dog can have puppies." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which characteristic shows something is living?", options: ["It moves on its own", "It can be painted", "It can be broken", "It has a shape"], answer: "It moves on its own", explanation: "The ability to move independently is a sign of a living thing (like animals). Plants also show movement by growing towards light." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Materials &amp; States of Matter": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Water can exist in which of these forms?", options: ["Solid, Liquid, Gas", "Solid only", "Gas only", "Liquid only"], answer: "Solid, Liquid, Gas", explanation: "Water is unique and commonly exists in three states: solid (ice), liquid (water), and gas (steam or water vapor)." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which material is transparent?", options: ["Wood", "Glass", "Metal", "Paper"], answer: "Glass", explanation: "Transparent materials allow light to pass through them completely so you can see clearly through them. Glass is a good example." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which material is a good conductor of electricity?", options: ["Copper", "Plastic", "Rubber", "Wood"], answer: "Copper", explanation: "Metals like copper are excellent conductors, meaning they allow electricity to flow through them easily. Plastic, rubber, and wood are insulators." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which of these melts when heated?", options: ["Ice", "Stone", "Wood", "Brick"], answer: "Ice", explanation: "Melting is the process of a solid turning into a liquid when heated. Ice is the solid form of water and melts at 0°C." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Life Cycles": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "What is the first stage of a butterfly’s life cycle?", options: ["Egg", "Caterpillar", "Pupa", "Adult"], answer: "Egg", explanation: "The butterfly life cycle starts when an adult butterfly lays an egg." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "A young frog is called a?", options: ["Pupa", "Tadpole", "Larva", "Chick"], answer: "Tadpole", explanation: "A tadpole is the larval stage of a frog, which hatches from an egg and lives in water." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which stage comes after larva in a butterfly?", options: ["Pupa", "Egg", "Adult", "Caterpillar"], answer: "Pupa", explanation: "The butterfly life cycle is Egg -&gt; Larva (caterpillar) -&gt; Pupa -&gt; Adult. The pupa is the transformation stage." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Seeds grow into plants under which conditions?", options: ["Soil, Water, Sunlight", "Only Soil", "Only Water", "Only Sunlight"], answer: "Soil, Water, Sunlight", explanation: "For a seed to germinate and grow into a healthy plant, it typically needs a combination of soil (for nutrients and support), water, and sunlight (for energy)." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Energy, Light &amp; Heat": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "The Sun is a source of?", options: ["Light and Heat", "Water", "Food", "Wind"], answer: "Light and Heat", explanation: "The Sun is a star that radiates enormous amounts of energy, which we perceive as light and heat." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which surface reflects light the best?", options: ["Mirror", "Paper", "Cloth", "Wood"], answer: "Mirror", explanation: "A mirror has a very smooth and shiny surface that reflects almost all the light that hits it, creating a clear image." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which of these produces heat?", options: ["Candle", "Ice", "Water", "Stone"], answer: "Candle", explanation: "A burning candle is a chemical reaction that releases energy in the form of heat and light." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Shadows are formed when?", options: ["An object blocks light", "It rains", "Wind blows", "Plants grow"], answer: "An object blocks light", explanation: "Light travels in straight lines. A shadow is an area where light is blocked by an opaque object." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Water &amp; Weather": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Water changes into water vapour during?", options: ["Melting", "Freezing", "Evaporation", "Condensation"], answer: "Evaporation", explanation: "Evaporation is the process where a liquid, like water, turns into a gas (water vapor) when it is heated." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Rain comes from?", options: ["Clouds", "Rivers", "Sea", "Plants"], answer: "Clouds", explanation: "Clouds are made of tiny water droplets. When these droplets get heavy enough, they fall to the Earth as rain." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Plants": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which part of the plant makes food?", options: ["Leaf", "Root", "Stem", "Flower"], answer: "Leaf", explanation: "Leaves are where photosynthesis happens. They use sunlight, water, and carbon dioxide to create food (sugar) for the plant." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which part of the plant takes in water?", options: ["Root", "Stem", "Leaf", "Flower"], answer: "Root", explanation: "The roots anchor the plant and absorb water and nutrients from the soil." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Animals &amp; Habitats": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which animal lives both on land and in water?", options: ["Frog", "Dog", "Bird", "Cat"], answer: "Frog", explanation: "Frogs are amphibians, which means they are adapted to live both on land and in water." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which animal lays eggs?", options: ["Hen", "Cat", "Dog", "Cow"], answer: "Hen", explanation: "Hens (chickens) are birds, and birds reproduce by laying eggs. Cats, dogs, and cows are mammals that give birth to live young." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>],</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>"Forces &amp; Simple Machines": [</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "Which force pulls objects to the ground?", options: ["Gravity", "Push", "Friction", "Magnetism"], answer: "Gravity", explanation: "Gravity is the fundamental force of attraction that all matter exerts. On Earth, it pulls everything towards the planet's center." },</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>{ q: "A seesaw is an example of?", options: ["Lever", "Pulley", "Wheel", "Spring"], answer: "Lever", explanation: "A lever is a simple machine consisting of a beam or rigid rod pivoted at a fixed hinge, or fulcrum. A seesaw is a classic example." }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>]</span></p>
-<p class="p1"><span class="s1">};</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">let currentQuiz = [];</span></p>
-<p class="p1"><span class="s1">let answers = {}; // Stores user's answers: { questionIndex: "answer text" }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function shuffle(arr) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>for (let i = arr.length - 1; i &gt; 0; i--) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const j = Math.floor(Math.random() * (i + 1));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>[arr[i], arr[j]] = [arr[j], arr[i]];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return arr;</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function startQuiz() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const numQ = parseInt($('#numQuestions').value);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const selectedTopics = [...$$('.topic:checked')].map(c =&gt; c.value);</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let pool = [];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>selectedTopics.forEach(topic =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (questions[topic]) pool = pool.concat(questions[topic]);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (pool.length === 0) { alert("Please select at least one topic."); return; }</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (pool.length &lt; numQ) { alert(`Not enough questions for the selected topics! Please select more topics or fewer questions. Available: ${pool.length}`); return; }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>currentQuiz = shuffle(pool).slice(0, numQ);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>answers = {};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#quiz').innerHTML = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#result').innerHTML = '';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#submitBtn').classList.remove('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('.settings-form').classList.add('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#progress-container').classList.remove('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>updateProgress();</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>currentQuiz.forEach((q, i) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const qDiv = document.createElement('div');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>qDiv.className = 'question';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>qDiv.innerHTML = `&lt;h3&gt;Q${i+1}. ${q.q}&lt;/h3&gt;`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const optsDiv = document.createElement('div');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>optsDiv.className = 'options';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>shuffle(q.options).forEach(opt =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const btn = document.createElement('button');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>btn.textContent = opt;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">      </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>btn.onclick = () =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>optsDiv.querySelectorAll('button').forEach(b =&gt; b.classList.remove('selected'));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>btn.classList.add('selected');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>answers[i] = opt;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>updateProgress();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>};</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>optsDiv.appendChild(btn);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>qDiv.appendChild(optsDiv);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>$('#quiz').appendChild(qDiv);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function updateProgress() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const percent = (currentQuiz.length &gt; 0) ? (Object.keys(answers).length / currentQuiz.length) * 100 : 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#progress-bar').style.width = percent + '%';</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function submitQuiz() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let score = 0;</span></p>
-<p class="p2"><span class="s1"><span class="Apple-converted-space">  </span></span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>currentQuiz.forEach((q, i) =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const questionDiv = $$('.question')[i];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const optionsButtons = questionDiv.querySelectorAll('.options button');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const userAnswer = answers[i];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>const correctAnswer = q.answer;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (userAnswer === correctAnswer) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>score++;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>optionsButtons.forEach(button =&gt; {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const buttonText = button.textContent;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (buttonText === correctAnswer) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>button.classList.add('correct');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>button.classList.remove('selected');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>if (buttonText === userAnswer &amp;&amp; userAnswer !== correctAnswer) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>button.classList.add('wrong');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>button.disabled = true;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>if (userAnswer !== correctAnswer &amp;&amp; q.explanation) {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>const explanationDiv = document.createElement('div');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explanationDiv.className = 'explanation';</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>explanationDiv.innerHTML = `&lt;strong&gt;💡 Explanation:&lt;/strong&gt; ${q.explanation}`;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>questionDiv.appendChild(explanationDiv);</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>});</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#submitBtn').classList.add('hidden');</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const percent = (currentQuiz.length &gt; 0) ? Math.round((score / currentQuiz.length) * 100) : 0;</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#result').innerHTML = `&lt;h2&gt;🎯 You got ${score} / ${currentQuiz.length} (${percent}%)&lt;/h2&gt;&lt;button onclick="location.reload()"&gt;Play Again&lt;/button&gt;`;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>// Update and save history</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const history = JSON.parse(localStorage.getItem('quizHistory')) || [];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>history.unshift({ date: new Date().toLocaleString(), score, total: currentQuiz.length });</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (history.length &gt; 10) history.pop();</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>localStorage.setItem('quizHistory', JSON.stringify(history));</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>loadHistory();</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">function loadHistory() {</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const history = JSON.parse(localStorage.getItem('quizHistory')) || [];</span></p>
-<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>$('#historyList').innerHTML = history.map(h =&gt; `&lt;li&gt;${h.date}: &lt;strong&gt;${h.score}/${h.total}&lt;/strong&gt;&lt;/li&gt;`).join('');</span></p>
-<p class="p1"><span class="s1">}</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">// --- Event Listeners ---</span></p>
-<p class="p1"><span class="s1">$('#startBtn').onclick = startQuiz;</span></p>
-<p class="p1"><span class="s1">$('#submitBtn').onclick = submitQuiz;</span></p>
-<p class="p1"><span class="s1">loadHistory();</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+<div class="container">
+  <h1>🎉 Singapore Happy Quiz 🎉</h1>
+
+  <div class="settings-form">
+    <div class="form-control">
+      <label>Number of Questions: <input type="number" id="numQuestions" value="5" min="1" max="50"></label>
+    </div>
+    <div class="form-control">
+      <label><input type="checkbox" id="autoSubmit" disabled> Auto-submit when finished</label>
+    </div>
+    
+    <fieldset class="form-control">
+      <legend>Select Topics:</legend>
+      <label><input type="checkbox" class="topic" value="Living & Non-Living Things" checked> Living & Non-Living Things</label>
+      <label><input type="checkbox" class="topic" value="Materials & States of Matter" checked> Materials & States of Matter</label>
+      <label><input type="checkbox" class="topic" value="Life Cycles" checked> Life Cycles</label>
+      <label><input type="checkbox" class="topic" value="Energy, Light & Heat" checked> Energy, Light & Heat</label>
+      <label><input type="checkbox" class="topic" value="Water & Weather" checked> Water & Weather</label>
+      <label><input type="checkbox" class="topic" value="Plants" checked> Plants</label>
+      <label><input type="checkbox" class="topic" value="Animals & Habitats" checked> Animals & Habitats</label>
+      <label><input type="checkbox" class="topic" value="Forces & Simple Machines" checked> Forces & Simple Machines</label>
+    </fieldset>
+
+    <div class="form-control">
+      <button id="startBtn">🚀 Start Quiz</button>
+    </div>
+  </div>
+
+  <div id="progress-container" class="hidden"><div id="progress-bar"></div></div>
+  <div id="quiz"></div>
+  <button id="submitBtn" class="hidden">✅ Submit Quiz</button>
+  <div id="result"></div>
+
+  <div id="history">
+    <h3>📜 Quiz History</h3>
+    <ul id="historyList"></ul>
+  </div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+const questions = {
+  "Living & Non-Living Things": [
+    { q: "Which of these is a living thing?", options: ["Rock", "Fish", "Table", "Spoon"], answer: "Fish", explanation: "Living things can grow, move, reproduce, and need food and water. A fish does all of these, while rocks, tables, and spoons do not." },
+    { q: "Which of these needs air, food, and water to survive?", options: ["Tree", "Toy", "Car", "Cup"], answer: "Tree", explanation: "A tree is a living plant that needs air (carbon dioxide), water, and nutrients (food) from the soil to survive and grow." },
+    { q: "Which of these grows over time?", options: ["Cat", "Chair", "Pen", "Stone"], answer: "Cat", explanation: "Growth is a key characteristic of living things. A cat is a living animal that grows from a kitten to an adult." },
+    { q: "Which of these can reproduce?", options: ["Dog", "Book", "Cup", "Shoe"], answer: "Dog", explanation: "Reproduction (making more of its own kind) is something only living things can do. A dog can have puppies." },
+    { q: "Which characteristic shows something is living?", options: ["It moves on its own", "It can be painted", "It can be broken", "It has a shape"], answer: "It moves on its own", explanation: "The ability to move independently is a sign of a living thing (like animals). Plants also show movement by growing towards light." }
+  ],
+  "Materials & States of Matter": [
+    { q: "Water can exist in which of these forms?", options: ["Solid, Liquid, Gas", "Solid only", "Gas only", "Liquid only"], answer: "Solid, Liquid, Gas", explanation: "Water is unique and commonly exists in three states: solid (ice), liquid (water), and gas (steam or water vapor)." },
+    { q: "Which material is transparent?", options: ["Wood", "Glass", "Metal", "Paper"], answer: "Glass", explanation: "Transparent materials allow light to pass through them completely so you can see clearly through them. Glass is a good example." },
+    { q: "Which material is a good conductor of electricity?", options: ["Copper", "Plastic", "Rubber", "Wood"], answer: "Copper", explanation: "Metals like copper are excellent conductors, meaning they allow electricity to flow through them easily. Plastic, rubber, and wood are insulators." },
+    { q: "Which of these melts when heated?", options: ["Ice", "Stone", "Wood", "Brick"], answer: "Ice", explanation: "Melting is the process of a solid turning into a liquid when heated. Ice is the solid form of water and melts at 0°C." }
+  ],
+  "Life Cycles": [
+    { q: "What is the first stage of a butterfly’s life cycle?", options: ["Egg", "Caterpillar", "Pupa", "Adult"], answer: "Egg", explanation: "The butterfly life cycle starts when an adult butterfly lays an egg." },
+    { q: "A young frog is called a?", options: ["Pupa", "Tadpole", "Larva", "Chick"], answer: "Tadpole", explanation: "A tadpole is the larval stage of a frog, which hatches from an egg and lives in water." },
+    { q: "Which stage comes after larva in a butterfly?", options: ["Pupa", "Egg", "Adult", "Caterpillar"], answer: "Pupa", explanation: "The butterfly life cycle is Egg -> Larva (caterpillar) -> Pupa -> Adult. The pupa is the transformation stage." },
+    { q: "Seeds grow into plants under which conditions?", options: ["Soil, Water, Sunlight", "Only Soil", "Only Water", "Only Sunlight"], answer: "Soil, Water, Sunlight", explanation: "For a seed to germinate and grow into a healthy plant, it typically needs a combination of soil (for nutrients and support), water, and sunlight (for energy)." }
+  ],
+  "Energy, Light & Heat": [
+    { q: "The Sun is a source of?", options: ["Light and Heat", "Water", "Food", "Wind"], answer: "Light and Heat", explanation: "The Sun is a star that radiates enormous amounts of energy, which we perceive as light and heat." },
+    { q: "Which surface reflects light the best?", options: ["Mirror", "Paper", "Cloth", "Wood"], answer: "Mirror", explanation: "A mirror has a very smooth and shiny surface that reflects almost all the light that hits it, creating a clear image." },
+    { q: "Which of these produces heat?", options: ["Candle", "Ice", "Water", "Stone"], answer: "Candle", explanation: "A burning candle is a chemical reaction that releases energy in the form of heat and light." },
+    { q: "Shadows are formed when?", options: ["An object blocks light", "It rains", "Wind blows", "Plants grow"], answer: "An object blocks light", explanation: "Light travels in straight lines. A shadow is an area where light is blocked by an opaque object." }
+  ],
+  "Water & Weather": [
+    { q: "Water changes into water vapour during?", options: ["Melting", "Freezing", "Evaporation", "Condensation"], answer: "Evaporation", explanation: "Evaporation is the process where a liquid, like water, turns into a gas (water vapor) when it is heated." },
+    { q: "Rain comes from?", options: ["Clouds", "Rivers", "Sea", "Plants"], answer: "Clouds", explanation: "Clouds are made of tiny water droplets. When these droplets get heavy enough, they fall to the Earth as rain." }
+  ],
+  "Plants": [
+    { q: "Which part of the plant makes food?", options: ["Leaf", "Root", "Stem", "Flower"], answer: "Leaf", explanation: "Leaves are where photosynthesis happens. They use sunlight, water, and carbon dioxide to create food (sugar) for the plant." },
+    { q: "Which part of the plant takes in water?", options: ["Root", "Stem", "Leaf", "Flower"], answer: "Root", explanation: "The roots anchor the plant and absorb water and nutrients from the soil." }
+  ],
+  "Animals & Habitats": [
+    { q: "Which animal lives both on land and in water?", options: ["Frog", "Dog", "Bird", "Cat"], answer: "Frog", explanation: "Frogs are amphibians, which means they are adapted to live both on land and in water." },
+    { q: "Which animal lays eggs?", options: ["Hen", "Cat", "Dog", "Cow"], answer: "Hen", explanation: "Hens (chickens) are birds, and birds reproduce by laying eggs. Cats, dogs, and cows are mammals that give birth to live young." }
+  ],
+  "Forces & Simple Machines": [
+    { q: "Which force pulls objects to the ground?", options: ["Gravity", "Push", "Friction", "Magnetism"], answer: "Gravity", explanation: "Gravity is the fundamental force of attraction that all matter exerts. On Earth, it pulls everything towards the planet's center." },
+    { q: "A seesaw is an example of?", options: ["Lever", "Pulley", "Wheel", "Spring"], answer: "Lever", explanation: "A lever is a simple machine consisting of a beam or rigid rod pivoted at a fixed hinge, or fulcrum. A seesaw is a classic example." }
+  ]
+};
+
+
+let currentQuiz = [];
+let answers = {}; // Stores user's answers: { questionIndex: "answer text" }
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz() {
+  const numQ = parseInt($('#numQuestions').value);
+  const selectedTopics = [...$$('.topic:checked')].map(c => c.value);
+
+  let pool = [];
+  selectedTopics.forEach(topic => {
+    if (questions[topic]) pool = pool.concat(questions[topic]);
+  });
+
+  if (pool.length === 0) { alert("Please select at least one topic."); return; }
+  if (pool.length < numQ) { alert(`Not enough questions for the selected topics! Please select more topics or fewer questions. Available: ${pool.length}`); return; }
+
+  currentQuiz = shuffle(pool).slice(0, numQ);
+  answers = {};
+  $('#quiz').innerHTML = '';
+  $('#result').innerHTML = '';
+  $('#submitBtn').classList.remove('hidden');
+  $('.settings-form').classList.add('hidden');
+  $('#progress-container').classList.remove('hidden');
+  updateProgress();
+
+  currentQuiz.forEach((q, i) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'question';
+    qDiv.innerHTML = `<h3>Q${i+1}. ${q.q}</h3>`;
+    const optsDiv = document.createElement('div');
+    optsDiv.className = 'options';
+    shuffle(q.options).forEach(opt => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      
+      btn.onclick = () => {
+        optsDiv.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        answers[i] = opt;
+        updateProgress();
+      };
+      optsDiv.appendChild(btn);
+    });
+    qDiv.appendChild(optsDiv);
+    $('#quiz').appendChild(qDiv);
+  });
+}
+
+function updateProgress() {
+  const percent = (currentQuiz.length > 0) ? (Object.keys(answers).length / currentQuiz.length) * 100 : 0;
+  $('#progress-bar').style.width = percent + '%';
+}
+
+function submitQuiz() {
+  let score = 0;
+  
+  currentQuiz.forEach((q, i) => {
+    const questionDiv = $$('.question')[i];
+    const optionsButtons = questionDiv.querySelectorAll('.options button');
+    const userAnswer = answers[i];
+    const correctAnswer = q.answer;
+
+    if (userAnswer === correctAnswer) {
+      score++;
+    }
+
+    optionsButtons.forEach(button => {
+      const buttonText = button.textContent;
+      if (buttonText === correctAnswer) {
+        button.classList.add('correct');
+        button.classList.remove('selected');
+      }
+      if (buttonText === userAnswer && userAnswer !== correctAnswer) {
+        button.classList.add('wrong');
+      }
+      button.disabled = true;
+    });
+
+    if (userAnswer !== correctAnswer && q.explanation) {
+      const explanationDiv = document.createElement('div');
+      explanationDiv.className = 'explanation';
+      explanationDiv.innerHTML = `<strong>💡 Explanation:</strong> ${q.explanation}`;
+      questionDiv.appendChild(explanationDiv);
+    }
+  });
+
+  $('#submitBtn').classList.add('hidden');
+  const percent = (currentQuiz.length > 0) ? Math.round((score / currentQuiz.length) * 100) : 0;
+  $('#result').innerHTML = `<h2>🎯 You got ${score} / ${currentQuiz.length} (${percent}%)</h2><button onclick="location.reload()">Play Again</button>`;
+
+  // Update and save history
+  const history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+  history.unshift({ date: new Date().toLocaleString(), score, total: currentQuiz.length });
+  if (history.length > 10) history.pop();
+  localStorage.setItem('quizHistory', JSON.stringify(history));
+  loadHistory();
+}
+
+function loadHistory() {
+  const history = JSON.parse(localStorage.getItem('quizHistory')) || [];
+  $('#historyList').innerHTML = history.map(h => `<li>${h.date}: <strong>${h.score}/${h.total}</strong></li>`).join('');
+}
+
+// --- Event Listeners ---
+$('#startBtn').onclick = startQuiz;
+$('#submitBtn').onclick = submitQuiz;
+loadHistory();
+
+</script>
 </body>
 </html>
