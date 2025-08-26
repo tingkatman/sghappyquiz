@@ -46,39 +46,46 @@
     border: 2px solid #90caf9;
     border-radius: 12px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s, border-color 0.2s;
     font-size: 1em;
-    font-family: inherit; /* Inherit font from body */
+    font-family: inherit;
   }
-  .options button:hover { background: #e3f2fd; }
-  .options button.correct { background: #c8e6c9 !important; border-color: #66bb6a; }
-  .options button.wrong { background: #ffcdd2 !important; border-color: #ef5350; }
+  .options button:hover:not(:disabled) { background: #e3f2fd; }
+  .options button:disabled { cursor: default; }
+
+  /* --- New and Modified Styles --- */
+  .options button.selected {
+    border-color: #1e88e5; /* A strong blue to indicate selection */
+    background: #bbdefb;
+  }
+  .options button.correct {
+    background: #c8e6c9 !important;
+    border-color: #66bb6a !important;
+  }
+  .options button.wrong {
+    background: #ffcdd2 !important;
+    border-color: #ef5350 !important;
+  }
+  .explanation {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #fff9c4;
+    border-radius: 8px;
+    border: 1px solid #fdd835;
+  }
+  /* --- End New Styles --- */
+
   #progress-container { background: #f0f0f0; border-radius: 10px; overflow: hidden; height: 20px; margin: 20px 0; }
   #progress-bar { background: #81c784; height: 100%; width: 0; transition: width 0.3s; }
-  #timer { font-size: 1.3em; color: #ff7043; text-align: center; margin: 10px 0; }
   #history { margin-top: 20px; padding: 10px; background: #f1f8e9; border-radius: 12px; }
   #history h3 { margin-top: 0; }
   .hidden { display: none; }
   
-  /* --- Styles for improved layout --- */
-  .settings-form .form-control {
-    margin-bottom: 15px;
-  }
-  .settings-form fieldset {
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-  .settings-form legend {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  .settings-form label {
-    margin-right: 15px;
-    display: inline-block;
-    margin-bottom: 5px;
-  }
-  #startBtn, #result button {
+  .settings-form .form-control { margin-bottom: 15px; }
+  .settings-form fieldset { border: none; padding: 0; margin: 0; }
+  .settings-form legend { font-weight: bold; margin-bottom: 10px; }
+  .settings-form label { margin-right: 15px; display: inline-block; margin-bottom: 5px; }
+  #startBtn, #result button, #submitBtn {
     font-size: 1.2em;
     padding: 10px 20px;
     cursor: pointer;
@@ -87,9 +94,7 @@
     background: #ff6f61;
     color: white;
   }
-  #result button {
-      margin-top: 20px;
-  }
+  #result button { margin-top: 20px; }
 </style>
 </head>
 <body>
@@ -101,10 +106,7 @@
       <label>Number of Questions: <input type="number" id="numQuestions" value="5" min="1" max="50"></label>
     </div>
     <div class="form-control">
-      <label>Time Limit (minutes): <input type="number" id="timeLimit" value="5" min="1"></label>
-    </div>
-    <div class="form-control">
-      <label><input type="checkbox" id="autoSubmit"> Auto-submit when finished</label>
+      <label><input type="checkbox" id="autoSubmit" disabled> Auto-submit when finished</label>
     </div>
     
     <fieldset class="form-control">
@@ -124,7 +126,6 @@
     </div>
   </div>
 
-  <div id="timer"></div>
   <div id="progress-container" class="hidden"><div id="progress-bar"></div></div>
   <div id="quiz"></div>
   <button id="submitBtn" class="hidden">✅ Submit Quiz</button>
@@ -140,54 +141,54 @@
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 
+// --- UPDATED: All questions now have an 'explanation' field ---
 const questions = {
   "Living & Non-Living Things": [
-    { q: "Which of these is a living thing?", options: ["Rock", "Fish", "Table", "Spoon"], answer: "Fish" },
-    { q: "Which of these needs air, food, and water to survive?", options: ["Tree", "Toy", "Car", "Cup"], answer: "Tree" },
-    { q: "Which of these grows over time?", options: ["Cat", "Chair", "Pen", "Stone"], answer: "Cat" },
-    { q: "Which of these can reproduce?", options: ["Dog", "Book", "Cup", "Shoe"], answer: "Dog" },
-    { q: "Which characteristic shows something is living?", options: ["It moves on its own", "It can be painted", "It can be broken", "It has a shape"], answer: "It moves on its own" }
+    { q: "Which of these is a living thing?", options: ["Rock", "Fish", "Table", "Spoon"], answer: "Fish", explanation: "Living things can grow, move, reproduce, and need food and water. A fish does all of these, while rocks, tables, and spoons do not." },
+    { q: "Which of these needs air, food, and water to survive?", options: ["Tree", "Toy", "Car", "Cup"], answer: "Tree", explanation: "A tree is a living plant that needs air (carbon dioxide), water, and nutrients (food) from the soil to survive and grow." },
+    { q: "Which of these grows over time?", options: ["Cat", "Chair", "Pen", "Stone"], answer: "Cat", explanation: "Growth is a key characteristic of living things. A cat is a living animal that grows from a kitten to an adult." },
+    { q: "Which of these can reproduce?", options: ["Dog", "Book", "Cup", "Shoe"], answer: "Dog", explanation: "Reproduction (making more of its own kind) is something only living things can do. A dog can have puppies." },
+    { q: "Which characteristic shows something is living?", options: ["It moves on its own", "It can be painted", "It can be broken", "It has a shape"], answer: "It moves on its own", explanation: "The ability to move independently is a sign of a living thing (like animals). Plants also show movement by growing towards light." }
   ],
   "Materials & States of Matter": [
-    { q: "Water can exist in which of these forms?", options: ["Solid, Liquid, Gas", "Solid only", "Gas only", "Liquid only"], answer: "Solid, Liquid, Gas" },
-    { q: "Which material is transparent?", options: ["Wood", "Glass", "Metal", "Paper"], answer: "Glass" },
-    { q: "Which material is a good conductor of electricity?", options: ["Copper", "Plastic", "Rubber", "Wood"], answer: "Copper" },
-    { q: "Which of these melts when heated?", options: ["Ice", "Stone", "Wood", "Brick"], answer: "Ice" }
+    { q: "Water can exist in which of these forms?", options: ["Solid, Liquid, Gas", "Solid only", "Gas only", "Liquid only"], answer: "Solid, Liquid, Gas", explanation: "Water is unique and commonly exists in three states: solid (ice), liquid (water), and gas (steam or water vapor)." },
+    { q: "Which material is transparent?", options: ["Wood", "Glass", "Metal", "Paper"], answer: "Glass", explanation: "Transparent materials allow light to pass through them completely so you can see clearly through them. Glass is a good example." },
+    { q: "Which material is a good conductor of electricity?", options: ["Copper", "Plastic", "Rubber", "Wood"], answer: "Copper", explanation: "Metals like copper are excellent conductors, meaning they allow electricity to flow through them easily. Plastic, rubber, and wood are insulators." },
+    { q: "Which of these melts when heated?", options: ["Ice", "Stone", "Wood", "Brick"], answer: "Ice", explanation: "Melting is the process of a solid turning into a liquid when heated. Ice is the solid form of water and melts at 0°C." }
   ],
   "Life Cycles": [
-    { q: "What is the first stage of a butterfly’s life cycle?", options: ["Egg", "Caterpillar", "Pupa", "Adult"], answer: "Egg" },
-    { q: "A young frog is called a?", options: ["Pupa", "Tadpole", "Larva", "Chick"], answer: "Tadpole" },
-    { q: "Which stage comes after larva in a butterfly?", options: ["Pupa", "Egg", "Adult", "Caterpillar"], answer: "Pupa" },
-    { q: "Seeds grow into plants under which conditions?", options: ["Soil, Water, Sunlight", "Only Soil", "Only Water", "Only Sunlight"], answer: "Soil, Water, Sunlight" }
+    { q: "What is the first stage of a butterfly’s life cycle?", options: ["Egg", "Caterpillar", "Pupa", "Adult"], answer: "Egg", explanation: "The butterfly life cycle starts when an adult butterfly lays an egg." },
+    { q: "A young frog is called a?", options: ["Pupa", "Tadpole", "Larva", "Chick"], answer: "Tadpole", explanation: "A tadpole is the larval stage of a frog, which hatches from an egg and lives in water." },
+    { q: "Which stage comes after larva in a butterfly?", options: ["Pupa", "Egg", "Adult", "Caterpillar"], answer: "Pupa", explanation: "The butterfly life cycle is Egg -> Larva (caterpillar) -> Pupa -> Adult. The pupa is the transformation stage." },
+    { q: "Seeds grow into plants under which conditions?", options: ["Soil, Water, Sunlight", "Only Soil", "Only Water", "Only Sunlight"], answer: "Soil, Water, Sunlight", explanation: "For a seed to germinate and grow into a healthy plant, it typically needs a combination of soil (for nutrients and support), water, and sunlight (for energy)." }
   ],
   "Energy, Light & Heat": [
-    { q: "The Sun is a source of?", options: ["Light and Heat", "Water", "Food", "Wind"], answer: "Light and Heat" },
-    { q: "Which surface reflects light the best?", options: ["Mirror", "Paper", "Cloth", "Wood"], answer: "Mirror" },
-    { q: "Which of these produces heat?", options: ["Candle", "Ice", "Water", "Stone"], answer: "Candle" },
-    { q: "Shadows are formed when?", options: ["An object blocks light", "It rains", "Wind blows", "Plants grow"], answer: "An object blocks light" }
+    { q: "The Sun is a source of?", options: ["Light and Heat", "Water", "Food", "Wind"], answer: "Light and Heat", explanation: "The Sun is a star that radiates enormous amounts of energy, which we perceive as light and heat." },
+    { q: "Which surface reflects light the best?", options: ["Mirror", "Paper", "Cloth", "Wood"], answer: "Mirror", explanation: "A mirror has a very smooth and shiny surface that reflects almost all the light that hits it, creating a clear image." },
+    { q: "Which of these produces heat?", options: ["Candle", "Ice", "Water", "Stone"], answer: "Candle", explanation: "A burning candle is a chemical reaction that releases energy in the form of heat and light." },
+    { q: "Shadows are formed when?", options: ["An object blocks light", "It rains", "Wind blows", "Plants grow"], answer: "An object blocks light", explanation: "Light travels in straight lines. A shadow is an area where light is blocked by an opaque object." }
   ],
   "Water & Weather": [
-    { q: "Water changes into water vapour during?", options: ["Melting", "Freezing", "Evaporation", "Condensation"], answer: "Evaporation" },
-    { q: "Rain comes from?", options: ["Clouds", "Rivers", "Sea", "Plants"], answer: "Clouds" }
+    { q: "Water changes into water vapour during?", options: ["Melting", "Freezing", "Evaporation", "Condensation"], answer: "Evaporation", explanation: "Evaporation is the process where a liquid, like water, turns into a gas (water vapor) when it is heated." },
+    { q: "Rain comes from?", options: ["Clouds", "Rivers", "Sea", "Plants"], answer: "Clouds", explanation: "Clouds are made of tiny water droplets. When these droplets get heavy enough, they fall to the Earth as rain." }
   ],
   "Plants": [
-    { q: "Which part of the plant makes food?", options: ["Leaf", "Root", "Stem", "Flower"], answer: "Leaf" },
-    { q: "Which part of the plant takes in water?", options: ["Root", "Stem", "Leaf", "Flower"], answer: "Root" }
+    { q: "Which part of the plant makes food?", options: ["Leaf", "Root", "Stem", "Flower"], answer: "Leaf", explanation: "Leaves are where photosynthesis happens. They use sunlight, water, and carbon dioxide to create food (sugar) for the plant." },
+    { q: "Which part of the plant takes in water?", options: ["Root", "Stem", "Leaf", "Flower"], answer: "Root", explanation: "The roots anchor the plant and absorb water and nutrients from the soil." }
   ],
   "Animals & Habitats": [
-    { q: "Which animal lives both on land and in water?", options: ["Frog", "Dog", "Bird", "Cat"], answer: "Frog" },
-    { q: "Which animal lays eggs?", options: ["Cat", "Dog", "Hen", "Cow"], answer: "Hen" }
+    { q: "Which animal lives both on land and in water?", options: ["Frog", "Dog", "Bird", "Cat"], answer: "Frog", explanation: "Frogs are amphibians, which means they are adapted to live both on land and in water." },
+    { q: "Which animal lays eggs?", options: ["Hen", "Cat", "Dog", "Cow"], answer: "Hen", explanation: "Hens (chickens) are birds, and birds reproduce by laying eggs. Cats, dogs, and cows are mammals that give birth to live young." }
   ],
   "Forces & Simple Machines": [
-    { q: "Which force pulls objects to the ground?", options: ["Gravity", "Push", "Friction", "Magnetism"], answer: "Gravity" },
-    { q: "A seesaw is an example of?", options: ["Lever", "Pulley", "Wheel", "Spring"], answer: "Lever" }
+    { q: "Which force pulls objects to the ground?", options: ["Gravity", "Push", "Friction", "Magnetism"], answer: "Gravity", explanation: "Gravity is the fundamental force of attraction that all matter exerts. On Earth, it pulls everything towards the planet's center." },
+    { q: "A seesaw is an example of?", options: ["Lever", "Pulley", "Wheel", "Spring"], answer: "Lever", explanation: "A lever is a simple machine consisting of a beam or rigid rod pivoted at a fixed hinge, or fulcrum. A seesaw is a classic example." }
   ]
 };
 
+
 let currentQuiz = [];
-let answers = {};
-let timerInterval;
-let timeLeft;
+let answers = {}; // Stores user's answers: { questionIndex: "answer text" }
 
 function shuffle(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -199,7 +200,6 @@ function shuffle(arr) {
 
 function startQuiz() {
   const numQ = parseInt($('#numQuestions').value);
-  const limit = parseInt($('#timeLimit').value) * 60;
   const selectedTopics = [...$$('.topic:checked')].map(c => c.value);
 
   let pool = [];
@@ -217,6 +217,7 @@ function startQuiz() {
   $('#submitBtn').classList.remove('hidden');
   $('.settings-form').classList.add('hidden');
   $('#progress-container').classList.remove('hidden');
+  updateProgress();
 
   currentQuiz.forEach((q, i) => {
     const qDiv = document.createElement('div');
@@ -227,44 +228,20 @@ function startQuiz() {
     shuffle(q.options).forEach(opt => {
       const btn = document.createElement('button');
       btn.textContent = opt;
+      
+      // --- UPDATED: On-click logic just selects the answer ---
       btn.onclick = () => {
-        if (answers[i] !== undefined) return; // Lock answer
-        
-        answers[i] = opt;
-        
-        optsDiv.querySelectorAll('button').forEach(b => {
-          if (b.textContent === q.answer) {
-            b.classList.add('correct');
-          } else if (b.textContent === opt) {
-            b.classList.add('wrong');
-          }
-        });
-        
+        // Remove 'selected' from sibling buttons and apply to the clicked one
+        optsDiv.querySelectorAll('button').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        answers[i] = opt; // Store the selected answer
         updateProgress();
-        if ($('#autoSubmit').checked && Object.keys(answers).length === currentQuiz.length) {
-          setTimeout(submitQuiz, 500);
-        }
       };
       optsDiv.appendChild(btn);
     });
     qDiv.appendChild(optsDiv);
     $('#quiz').appendChild(qDiv);
   });
-
-  timeLeft = limit;
-  clearInterval(timerInterval);
-  if (limit > 0) {
-    $('#timer').textContent = formatTime(timeLeft);
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      $('#timer').textContent = formatTime(Math.max(0, timeLeft));
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        submitQuiz();
-      }
-    }, 1000);
-  }
-  updateProgress();
 }
 
 function updateProgress() {
@@ -272,23 +249,49 @@ function updateProgress() {
   $('#progress-bar').style.width = percent + '%';
 }
 
-function formatTime(sec) {
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return `${m}:${s.toString().padStart(2, '0')}`;
-}
-
+// --- UPDATED: This function now handles all grading and feedback ---
 function submitQuiz() {
-  clearInterval(timerInterval);
-  $('#submitBtn').classList.add('hidden');
-  
   let score = 0;
-  currentQuiz.forEach((q, i) => { if (answers[i] === q.answer) score++; });
-  const percent = (currentQuiz.length > 0) ? Math.round((score / currentQuiz.length) * 100) : 0;
   
-  // Use location.reload() for a simple "Play Again" experience
+  currentQuiz.forEach((q, i) => {
+    const questionDiv = $$('.question')[i];
+    const optionsButtons = questionDiv.querySelectorAll('.options button');
+    const userAnswer = answers[i];
+    const correctAnswer = q.answer;
+
+    // Grade the question
+    if (userAnswer === correctAnswer) {
+      score++;
+    }
+
+    // Apply visual feedback
+    optionsButtons.forEach(button => {
+      const buttonText = button.textContent;
+      if (buttonText === correctAnswer) {
+        button.classList.add('correct');
+        button.classList.remove('selected');
+      }
+      if (buttonText === userAnswer && userAnswer !== correctAnswer) {
+        button.classList.add('wrong');
+      }
+      button.disabled = true; // Disable all buttons for this question
+    });
+
+    // Add explanation if the answer was wrong and an explanation exists
+    if (userAnswer !== correctAnswer && q.explanation) {
+      const explanationDiv = document.createElement('div');
+      explanationDiv.className = 'explanation';
+      explanationDiv.innerHTML = `<strong>💡 Explanation:</strong> ${q.explanation}`;
+      questionDiv.appendChild(explanationDiv);
+    }
+  });
+
+  // Hide the submit button and show the final score
+  $('#submitBtn').classList.add('hidden');
+  const percent = (currentQuiz.length > 0) ? Math.round((score / currentQuiz.length) * 100) : 0;
   $('#result').innerHTML = `<h2>🎯 You got ${score} / ${currentQuiz.length} (${percent}%)</h2><button onclick="location.reload()">Play Again</button>`;
 
+  // Update and save history
   const history = JSON.parse(localStorage.getItem('quizHistory')) || [];
   history.unshift({ date: new Date().toLocaleString(), score, total: currentQuiz.length });
   if (history.length > 10) history.pop();
@@ -301,10 +304,11 @@ function loadHistory() {
   $('#historyList').innerHTML = history.map(h => `<li>${h.date}: <strong>${h.score}/${h.total}</strong></li>`).join('');
 }
 
+// --- Event Listeners ---
 $('#startBtn').onclick = startQuiz;
 $('#submitBtn').onclick = submitQuiz;
-
 loadHistory();
+
 </script>
 </body>
 </html>
